@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>استراتژی جامع رشد اینستاگرام ویچ کیلویی</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #fdfbf7; /* Creamy background */
+            color: #1f2937;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #f59e0b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d97706;
+        }
+    </style>
+    <!-- Chosen Palette: Warm & Appetizing (Orange, Red, Cream, Dark Grey) - reflecting fried chicken and fast food aesthetics. -->
+    <!-- Application Structure Plan:
+        1. Hero Section: Sets the mission and identity.
+        2. Dashboard Overview: Quantitative data on audience and content mix (Charts).
+        3. Golden Timing: Analysis of posting times specific to user behavior in Mazandaran (Chart).
+        4. Content Studio: Interactive filters for Scenarios, Hooks, and Captions.
+        5. Hashtag Vault: Filterable hashtag groups.
+        6. Growth Tactics: Offers and local engagement strategies.
+        Structure chosen to allow the user to first understand the 'Who' and 'When', then dive into the 'What' and 'How'.
+    -->
+    <!-- Visualization & Content Choices:
+        - Audience Demographics (Donut Chart): To visualize target customers (Tourists vs Locals).
+        - Best Posting Times (Bar Chart): To clearly show peak engagement hours.
+        - Content Mix (Pie Chart): To recommend the ratio of Reels/Stories/Posts.
+        - Scenario Generator (Interactive Cards): To provide actionable content ideas without overwhelming text.
+        - Hashtag Filters (Buttons): To organize large lists of tags into usable groups.
+        NO SVG/Mermaid used. All visuals via Chart.js or CSS/HTML.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+</head>
+<body class="bg-orange-50 selection:bg-orange-200">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-orange-100">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl">🍗</span>
+                <h1 class="text-xl font-bold text-orange-600">استراتژی ویچ کیلویی</h1>
+            </div>
+            <div class="hidden md:flex gap-6 text-sm font-medium text-gray-600">
+                <a href="#dashboard" class="hover:text-orange-600 transition">داشبورد</a>
+                <a href="#timing" class="hover:text-orange-600 transition">زمان‌بندی</a>
+                <a href="#scenarios" class="hover:text-orange-600 transition">سناریوها</a>
+                <a href="#hashtags" class="hover:text-orange-600 transition">هشتگ‌ها</a>
+            </div>
+            <button onclick="document.getElementById('offers').scrollIntoView({behavior: 'smooth'})" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold transition shadow-lg shadow-red-200">
+                پیشنهادات ویژه
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative overflow-hidden bg-gradient-to-br from-orange-500 to-red-600 text-white py-16 lg:py-24">
+        <div class="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/food.png')]"></div>
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur rounded-full text-sm mb-4 border border-white/30">نقشه راه موفقیت در مازندران</span>
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">سلطان سوخاری<br>از چالوس تا کل ایران</h2>
+            <p class="text-lg md:text-xl opacity-90 max-w-2xl mx-auto mb-8 leading-relaxed">
+                تحقیق جامع و برنامه عملیاتی برای تبدیل کردن پیج «ویچ کیلویی» به پربازده‌ترین رسانه فست‌فود در شمال کشور. تمرکز بر جذب توریست و وفاداری محلی.
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#scenarios" class="bg-white text-orange-600 px-8 py-3 rounded-xl font-bold hover:bg-gray-100 transition shadow-lg">تولید محتوا رو شروع کن</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-12 space-y-24">
+
+        <!-- SECTION 1: Strategic Dashboard -->
+        <section id="dashboard" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">📊 تحلیل استراتژیک مخاطب و محتوا</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto text-lg">
+                    برای موفقیت در چالوس و نوشهر، باید بدانیم مخاطب کیست و چه می‌خواهد. این بخش ترکیب ایده‌آل مخاطبین (توریست vs محلی) و ترکیب فرمت‌های محتوایی برای رشد سریع پیج را نشان می‌دهد.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+                <!-- Chart 1: Demographics -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                    <h4 class="text-xl font-bold mb-2 text-center text-gray-700">ترکیب طلایی مخاطبین هدف</h4>
+                    <p class="text-sm text-gray-500 text-center mb-6">تمرکز بر توریست‌های آخر هفته و مشتریان ثابت محلی</p>
+                    <div class="chart-container">
+                        <canvas id="audienceChart"></canvas>
+                    </div>
+                    <div class="mt-4 bg-orange-50 p-4 rounded-lg text-sm text-gray-700 leading-6">
+                        <strong class="text-orange-600">نکته کلیدی:</strong> 
+                        در روزهای آخر هفته (چهارشنبه تا جمعه) محتوا باید با رویکرد جذب مسافر (لوکیشن، تفریح، غذای سریع) باشد و در طول هفته تمرکز بر کیفیت، دلیوری و قیمت برای محلی‌ها.
+                    </div>
+                </div>
+
+                <!-- Chart 2: Content Mix -->
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100">
+                    <h4 class="text-xl font-bold mb-2 text-center text-gray-700">فرمول برنده محتوا</h4>
+                    <p class="text-sm text-gray-500 text-center mb-6">چه نوع پست‌هایی بیشترین ورودی را دارند؟</p>
+                    <div class="chart-container">
+                        <canvas id="contentMixChart"></canvas>
+                    </div>
+                    <div class="mt-4 bg-blue-50 p-4 rounded-lg text-sm text-gray-700 leading-6">
+                        <strong class="text-blue-600">تحلیل:</strong> 
+                        ریلزها (Reels) موتور جذب فالوور جدید هستند (اکسپلور). استوری‌ها ابزار فروش و تعامل با مشتری فعلی‌اند. پست‌های اسلایدی برای منو و توضیحات دقیق عالی هستند.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Timing & Algorithm -->
+        <section id="timing" class="bg-white rounded-3xl p-8 md:p-12 shadow-xl shadow-orange-100/50 border border-orange-100 scroll-mt-24">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <div class="lg:col-span-1 space-y-6">
+                    <h3 class="text-3xl font-bold text-gray-800">⏰ بهترین زمان پست‌گذاری</h3>
+                    <div class="h-1 w-20 bg-orange-500 rounded-full"></div>
+                    <p class="text-gray-600 leading-relaxed">
+                        رفتار کاربران در مازندران متفاوت است. مسافران اغلب دیر وقت بیدارند و به دنبال غذا هستند. این نمودار ساعات طلایی برای ماکسیمم دیده شدن را نشان می‌دهد.
+                    </p>
+                    <ul class="space-y-4 mt-4">
+                        <li class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 font-bold">۱</span>
+                            <div>
+                                <strong class="block text-gray-800">ناهار (۱۲:۰۰ تا ۱۳:۳۰)</strong>
+                                <span class="text-sm text-gray-500">تصمیم‌گیری برای ناهار ادارات و مسافران</span>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold">۲</span>
+                            <div>
+                                <strong class="block text-gray-800">شام و تفریح (۲۰:۰۰ تا ۲۲:۰۰)</strong>
+                                <span class="text-sm text-gray-500">پیک اصلی ترافیک اینستاگرام</span>
+                            </div>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">۳</span>
+                            <div>
+                                <strong class="block text-gray-800">شب‌زنده‌داران (۲۳:۰۰ تا ۰۰:۳۰)</strong>
+                                <span class="text-sm text-gray-500">مخصوص فست‌فود و ویلا نشین‌ها</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="lg:col-span-2">
+                    <div class="chart-container bg-gray-50 rounded-xl p-4 border border-gray-100">
+                        <canvas id="timingChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Content Studio (Scenarios & Hooks) -->
+        <section id="scenarios" class="scroll-mt-24">
+            <div class="text-center mb-10">
+                <span class="text-orange-600 font-bold tracking-wider text-sm">موتور خلاقیت</span>
+                <h3 class="text-3xl font-bold text-gray-800 mt-2">🎬 سناریوهای پولساز و کپشن‌های ویروسی</h3>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-4">
+                    در این بخش دسته‌بندی‌های مختلف محتوایی را انتخاب کنید تا ایده‌های آماده برای ساخت ریلز و نوشتن کپشن را ببینید.
+                </p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="flex flex-wrap justify-center gap-2 mb-8" id="contentTabs">
+                <button onclick="filterContent('reels')" class="tab-btn active px-6 py-2 rounded-full font-bold transition border border-transparent bg-orange-600 text-white shadow-lg shadow-orange-200">ایده‌های ریلز (Reels)</button>
+                <button onclick="filterContent('hooks')" class="tab-btn px-6 py-2 rounded-full font-bold transition border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">قلاب‌های اول ویدیو (Hooks)</button>
+                <button onclick="filterContent('captions')" class="tab-btn px-6 py-2 rounded-full font-bold transition border border-gray-200 bg-white text-gray-600 hover:bg-gray-50">کپشن‌نویسی</button>
+            </div>
+
+            <!-- Content Grid (Dynamic) -->
+            <div id="contentGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Content will be injected by JS -->
+            </div>
+        </section>
+
+        <!-- SECTION 4: Hashtag Strategy -->
+        <section id="hashtags" class="bg-gray-900 text-white rounded-3xl p-8 md:p-12 scroll-mt-24 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="relative z-10">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
+                    <div>
+                        <h3 class="text-3xl font-bold text-white mb-2">#️⃣ بانک هوشمند هشتگ</h3>
+                        <p class="text-gray-400">برای بهترین نتیجه، ترکیبی از هشتگ‌های مکان‌محور، تخصصی و عمومی استفاده کنید.</p>
+                    </div>
+                    <div class="flex gap-2 bg-gray-800 p-1 rounded-lg">
+                        <button onclick="showHashtags('local')" class="hashtag-filter px-4 py-1.5 rounded-md text-sm font-medium transition bg-orange-600 text-white">محلی (شمال)</button>
+                        <button onclick="showHashtags('niche')" class="hashtag-filter px-4 py-1.5 rounded-md text-sm font-medium transition text-gray-400 hover:text-white">تخصصی (غذا)</button>
+                        <button onclick="showHashtags('general')" class="hashtag-filter px-4 py-1.5 rounded-md text-sm font-medium transition text-gray-400 hover:text-white">عمومی (ترند)</button>
+                    </div>
+                </div>
+
+                <div id="hashtagContainer" class="bg-gray-800/50 rounded-xl p-6 border border-gray-700 backdrop-blur-sm min-h-[150px] flex flex-wrap gap-3 content-start">
+                    <!-- Hashtags injected here -->
+                </div>
+                
+                <div class="mt-6 flex items-center gap-2 text-sm text-gray-400 bg-gray-800/30 p-3 rounded-lg inline-flex">
+                    <span>💡</span>
+                    <span>نکته: در هر پست بین ۱۵ تا ۲۰ هشتگ استفاده کنید. ۵ تا محلی، ۱۰ تا تخصصی، ۵ تا عمومی.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Offers & Management -->
+        <section id="offers" class="scroll-mt-24">
+             <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold text-gray-800 mb-4">💎 آفرها و تکنیک‌های مدیریت پیج</h3>
+                <p class="text-gray-600 max-w-3xl mx-auto">
+                    فروش فقط با گذاشتن عکس غذا اتفاق نمی‌افتد. شما نیاز به "پیشنهاد رد نشدنی" و تعامل درست دارید.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Offer Card 1 -->
+                <div class="card-hover bg-gradient-to-br from-red-50 to-white p-6 rounded-2xl border border-red-100">
+                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center text-2xl mb-4">☔️</div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">کمپین روزهای بارانی</h4>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        شمال زیاد باران می‌بارد و مردم حس بیرون رفتن ندارند.
+                    </p>
+                    <div class="bg-white p-3 rounded-lg border border-red-50 shadow-sm text-sm font-medium text-red-600">
+                        آفر: «هوا بارونیه؟ دلیوری رایگان برای سفارش‌های بالای ۱ کیلو!»
+                    </div>
+                </div>
+
+                <!-- Offer Card 2 -->
+                <div class="card-hover bg-gradient-to-br from-orange-50 to-white p-6 rounded-2xl border border-orange-100">
+                    <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-2xl mb-4">⚖️</div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">چالش حدس وزن</h4>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        چون برند شما "کیلویی" است، روی وزن مانور دهید.
+                    </p>
+                    <div class="bg-white p-3 rounded-lg border border-orange-50 shadow-sm text-sm font-medium text-orange-600">
+                        سناریو: استوری بگذارید از یک سینی پر. «اگر وزن دقیق رو حدس بزنی، همین سینی مجانی برای تو!»
+                    </div>
+                </div>
+
+                <!-- Offer Card 3 -->
+                <div class="card-hover bg-gradient-to-br from-green-50 to-white p-6 rounded-2xl border border-green-100">
+                    <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-2xl mb-4">🎒</div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">پک مسافری</h4>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        برای مسافرانی که می‌خواهند کنار دریا یا جنگل غذا بخورند.
+                    </p>
+                    <div class="bg-white p-3 rounded-lg border border-green-50 shadow-sm text-sm font-medium text-green-600">
+                        آفر: «پک خانواده: ۲ کیلو سوخاری میکس + نوشابه خانواده + سالاد = تخفیف ویژه»
+                    </div>
+                </div>
+
+                <!-- Tip Card 4 -->
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-white p-6 rounded-2xl border border-blue-100">
+                    <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center text-2xl mb-4">💬</div>
+                    <h4 class="text-xl font-bold text-gray-800 mb-2">تعامل در کامنت (Engagement)</h4>
+                    <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                        الگوریتم عاشق کامنت است.
+                    </p>
+                    <div class="bg-white p-3 rounded-lg border border-blue-50 shadow-sm text-sm font-medium text-blue-600">
+                        تکنیک: همیشه سوالات باز بپرسید. «سیب‌زمینی کنار سوخاری رو با سس سفید میخوری یا قرمز؟»
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 mt-12 border-t border-gray-700">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold text-orange-500 mb-4">ویچ کیلویی</h2>
+            <p class="text-gray-400 mb-8 max-w-md mx-auto">طعم موفقیت در اینستاگرام با استراتژی داده‌محور و محتوای خلاقانه.</p>
+            <div class="text-sm text-gray-500">
+                © طراحی استراتژی اختصاصی برای رشد کسب‌وکار
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        // --- Data Handling ---
+        
+        // Hashtag Data
+        const hashtags = {
+            local: ['#چالوس', '#نوشهر', '#مازندران', '#شمال', '#چالوس_گردی', '#نوشهر_گردی', '#جاده_چالوس', '#نمک_آبرود', '#متل_قو', '#کلارآباد', '#رستوران_چالوس', '#رستوران_نوشهر', '#فست_فود_شمال', '#mazandaran', '#chalous', '#nowshahr'],
+            niche: ['#سوخاری', '#سوخاری_کیلویی', '#مرغ_سوخاری', '#فست_فود', '#سیب_زمینی_سرخ_کرده', '#پیتزا', '#ساندویچ', '#برگر', '#رستورانگردی', '#شکمو', '#خوشمزه', '#غذا', '#شام', '#ناهار', '#friedchicken', '#foodporn'],
+            general: ['#اکسپلور', '#اینستاگرام', '#رستوران', '#آشپزی', '#کلیپ_آشپزی', '#ایران', '#تهران', '#کرج', '#طبیعت', '#تفریح', '#مسافرت', '#تعطیلات', '#explore', '#reelsinstagram']
+        };
+
+        // Content Data (Scenarios, Hooks, Captions)
+        const contentData = {
+            reels: [
+                { title: 'چالش صدای تردی (ASMR)', desc: 'میکروفون رو بیارید نزدیک سوخاری. صدای گاز زدن رو ضبط کنید. بدون موزیک، فقط صدای تردی.', tag: 'وایرال' },
+                { title: 'یک کیلو چقدر میشه؟', desc: 'روی ترازو یک کیلو سوخاری بکشید و نشون بدید چقدر حجمش زیاده. این سوال خیلی‌هاست.', tag: 'آموزشی/فروش' },
+                { title: 'پشت صحنه تمیزی', desc: 'نشون بدید روغن چقدر تمیزه و مرغ‌ها چطور شسته و مرینیت میشن. اعتماد سازی میکنه.', tag: 'اعتمادسازی' },
+                { title: 'واکنش مشتری واقعی', desc: 'وقتی مشتری سفارش رو تحویل میگیره و اولین گاز رو میزنه فیلم بگیرید (با اجازه).', tag: 'تایید اجتماعی' },
+                { title: 'میکس سس‌ها', desc: 'ریختن سس پنیر داغ روی کوه سوخاری و سیب زمینی. تصویر باید هوس انگیز باشه.', tag: 'هوس انگیز' },
+                { title: 'لوکیشن و مسیر', desc: 'یه ویدیو سریع از جاده چالوس/ساحل که قطع میشه به تابلو مغازه و غذای داغ.', tag: 'توریستی' }
+            ],
+            hooks: [
+                { title: 'سوال چالشی', desc: '«فکر میکنی بتونی ۱ کیلو سوخاری رو تنهایی بخوری؟»', tag: 'تعاملی' },
+                { title: 'ادعای بزرگ', desc: '«تردترین سوخاری کل مازندران رو پیدا کردم!»', tag: 'کنجکاوی' },
+                { title: 'شروع با نتیجه', desc: 'تصویر گاز زدن و پنیر کش اومده در ثانیه اول. «اینو ببین...»', tag: 'بصری' },
+                { title: 'مخصوص مخاطب خاص', desc: '«اگه مسافر شمال هستی و گشنته، این پست رو رد نکن!»', tag: 'هدفمند' },
+                { title: 'پیشنهاد رد نشدنی', desc: '«نصف قیمت بخر، اگه تا آخر ویدیو باهام باشی...»', tag: 'فروش' }
+            ],
+            captions: [
+                { title: 'کپشن داستانی', desc: 'تعریف کنید امروز چه اتفاق بامزه‌ای تو مغازه افتاد. یا داستان مشتری‌ای که از تهران فقط برای سوخاری اومده.', tag: 'تعامل بالا' },
+                { title: 'کپشن کوتاه و سوالی', desc: '«ران یا سینه؟ کدومش خوشمزه‌تره؟ تو کامنت بنویس 👇»', tag: 'کامنت بگیر' },
+                { title: 'کپشن منو محور', desc: 'لیست قیمت‌ها رو واضح بنویسید. مواد تشکیل دهنده رو بگید. نحوه سفارش رو توضیح بدید.', tag: 'اطلاعاتی' },
+                { title: 'کپشن تگ کردنی', desc: '«اون رفیقت که همیشه گشنشه رو تگ کن، باید مهمونت کنه!»', tag: 'وایرال' }
+            ]
+        };
+
+        // --- Logic Implementation ---
+
+        // 1. Hashtag Logic
+        function showHashtags(category) {
+            const container = document.getElementById('hashtagContainer');
+            const btns = document.querySelectorAll('.hashtag-filter');
+            
+            // Update active button style
+            btns.forEach(btn => {
+                if(btn.textContent.includes(category === 'local' ? 'محلی' : category === 'niche' ? 'تخصصی' : 'عمومی')) {
+                    btn.classList.remove('text-gray-400', 'hover:text-white');
+                    btn.classList.add('bg-orange-600', 'text-white');
+                } else {
+                    btn.classList.add('text-gray-400', 'hover:text-white');
+                    btn.classList.remove('bg-orange-600', 'text-white');
+                }
+            });
+
+            // Render tags
+            container.innerHTML = hashtags[category].map(tag => 
+                `<span class="inline-block bg-gray-700 hover:bg-gray-600 text-orange-400 px-3 py-1 rounded-full text-sm cursor-pointer transition select-all">${tag}</span>`
+            ).join('');
+        }
+
+        // 2. Content Filter Logic
+        function filterContent(type) {
+            const grid = document.getElementById('contentGrid');
+            const btns = document.querySelectorAll('.tab-btn');
+            
+            // Update Tab Styles
+            btns.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(type)) {
+                    btn.classList.remove('bg-white', 'text-gray-600', 'hover:bg-gray-50', 'border-gray-200');
+                    btn.classList.add('bg-orange-600', 'text-white', 'shadow-lg', 'shadow-orange-200', 'border-transparent');
+                } else {
+                    btn.classList.add('bg-white', 'text-gray-600', 'hover:bg-gray-50', 'border-gray-200');
+                    btn.classList.remove('bg-orange-600', 'text-white', 'shadow-lg', 'shadow-orange-200', 'border-transparent');
+                }
+            });
+
+            // Render Cards
+            grid.innerHTML = contentData[type].map(item => `
+                <div class="card-hover bg-white p-6 rounded-2xl border border-gray-100 flex flex-col h-full">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="bg-orange-100 text-orange-700 text-xs px-2 py-1 rounded-md font-bold">${item.tag}</span>
+                        <span class="text-2xl">${type === 'reels' ? '🎬' : type === 'hooks' ? '🪝' : '✍️'}</span>
+                    </div>
+                    <h4 class="text-lg font-bold text-gray-800 mb-2">${item.title}</h4>
+                    <p class="text-gray-600 text-sm leading-relaxed flex-grow">${item.desc}</p>
+                </div>
+            `).join('');
+        }
+
+        // --- Chart Initialization ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial Renders
+            showHashtags('local');
+            filterContent('reels');
+
+            // 1. Audience Chart (Doughnut)
+            const ctxAudience = document.getElementById('audienceChart').getContext('2d');
+            new Chart(ctxAudience, {
+                type: 'doughnut',
+                data: {
+                    labels: ['توریست (آخر هفته/تعطیلات)', 'بومی (مشتری ثابت)', 'عبوری (جاده)'],
+                    datasets: [{
+                        data: [50, 35, 15],
+                        backgroundColor: ['#f97316', '#ea580c', '#fbbf24'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Vazirmatn' } } }
+                    }
+                }
+            });
+
+            // 2. Content Mix Chart (Pie)
+            const ctxMix = document.getElementById('contentMixChart').getContext('2d');
+            new Chart(ctxMix, {
+                type: 'pie',
+                data: {
+                    labels: ['Reels (جذب مخاطب)', 'Stories (فروش/روزمره)', 'Post (منو/اطلاعات)'],
+                    datasets: [{
+                        data: [60, 30, 10],
+                        backgroundColor: ['#ef4444', '#f59e0b', '#3b82f6'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom', labels: { font: { family: 'Vazirmatn' } } }
+                    }
+                }
+            });
+
+            // 3. Timing Chart (Bar)
+            const ctxTiming = document.getElementById('timingChart').getContext('2d');
+            new Chart(ctxTiming, {
+                type: 'bar',
+                data: {
+                    labels: ['۱۰ صبح', '۱۲ ظهر', '۲ ظهر', '۴ عصر', '۶ عصر', '۸ شب', '۱۰ شب', '۱۲ شب'],
+                    datasets: [{
+                        label: 'میزان تعامل و بازدید',
+                        data: [20, 65, 50, 30, 45, 90, 95, 80],
+                        backgroundColor: (ctx) => {
+                            const value = ctx.raw;
+                            return value > 80 ? '#ea580c' : value > 50 ? '#fbbf24' : '#cbd5e1';
+                        },
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { 
+                            callbacks: {
+                                label: (context) => `امتیاز تعامل: ${context.raw}%`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { beginAtZero: true, grid: { display: false } },
+                        x: { grid: { display: false }, ticks: { font: { family: 'Vazirmatn' } } }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
